@@ -30,7 +30,7 @@ namespace crow
                     self->dq_[index].second = nullptr;
             }
 
-            key add(std::function<void()> f)
+            key add(std::function<bool()> f)
             {
                 dq_.emplace_back(std::chrono::steady_clock::now(), std::move(f));
                 int ret = step_+dq_.size()-1;
@@ -54,7 +54,8 @@ namespace crow
                     {
                         CROW_LOG_DEBUG << "timer call: " << this << ' ' << step_;
                         // we know that timer handlers are very simple currenty; call here
-                        x.second();
+                        if (!x.second())
+                            break;
                     }
                     dq_.pop_front();
                     step_++;
@@ -74,7 +75,7 @@ namespace crow
 
             int tick{5};
             boost::asio::io_service* io_service_{};
-            std::deque<std::pair<decltype(std::chrono::steady_clock::now()), std::function<void()>>> dq_;
+            std::deque<std::pair<decltype(std::chrono::steady_clock::now()), std::function<bool()>>> dq_;
             int step_{};
         };
     }
