@@ -347,9 +347,9 @@ namespace crow
                                             {
                                                 handle_fragment();
                                                 state_ = WebSocketReadState::MiniHeader;
-                                                do_read();
                                             }
-                                        }
+											do_read();
+										}
                                         else
                                         {
                                             close_connection_ = true;
