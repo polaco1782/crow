@@ -37,4 +37,7 @@
 #define constexpr const
 #define noexcept throw()
 #endif
+#if _MSC_VER >= 1910
+#define CROW_CAN_USE_CPP14
+#endif
 #endif
