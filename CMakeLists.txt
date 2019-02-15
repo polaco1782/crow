@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project (crow_all)
 
+if(POLICY CMP0074)
+  cmake_policy(SET CMP0074 NEW) # Use <PackageName>_ROOT environment variables
+endif()
+
 if(EXISTS "${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
